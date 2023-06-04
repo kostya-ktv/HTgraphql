@@ -13,7 +13,7 @@ export class CoffeesResolver {
         return this.coffeeService.findAll()
     }
 
-    @Query(() => Coffee, { name: 'coffee', nullable: true})
+    @Query(() => Coffee, { name: 'coffee'})
     async findOne(@Args('id', {type: () => ID}, ParseIntPipe) id: number) {
         return this.coffeeService.findOne(id)
     }
@@ -21,5 +21,13 @@ export class CoffeesResolver {
     @Mutation(() => Coffee, { name: 'createCoffee', nullable: true }) 
     async create(@Args('createCoffeeInput') createCoffeeInput: CreateCoffeeInput) {
         return this.coffeeService.create(createCoffeeInput)
+    }
+
+    @Mutation(() => Coffee, {name: 'updateCoffee'})
+    async update(
+        @Args('id', ParseIntPipe) id: number,
+        @Args('updateCoffeeInput') updateCoffeeInput: UpdateCoffeeInput,
+    ) { 
+        return this.coffeeService.update(id, updateCoffeeInput)
     }
 }

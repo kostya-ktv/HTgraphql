@@ -12,6 +12,7 @@ export class CoffeesService {
     constructor(
         @InjectRepository(Coffee)
         private readonly coffeeRepository: Repository<Coffee>,
+        @InjectRepository(Flavor)
         private readonly flavorsRepository: Repository<Flavor>
     ) { }
     

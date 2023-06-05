@@ -2,21 +2,50 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-"""Coffee entity model"""
-type Coffee {
-  id: ID!
+type Tea implements Drink {
   name: String!
-  brand: String!
-  flavors: [String!]!
 }
 
+interface Drink {
+  name: String!
+}
+
+type Flavor {
+  id: ID!
+  name: String!
+  coffees: [Coffee!]!
+}
+
+"""Coffee entity model"""
+type Coffee implements Drink {
+  name: String!
+  id: ID!
+  brand: String!
+  flavors: [Flavor!]!
+  createdAt: Date
+  type: CoffeeType!
+}
+
+enum CoffeeType {
+  ARABICA
+  ROBUSTA
+}
+
+"""Date custom scalar type"""
+scalar Date
+
 type Query {
+  drinks: [DrinksResult!]!
   coffees: [Coffee!]!
   coffee(id: ID!): Coffee!
 }
 
+union DrinksResult = Coffee | Tea
+
 type Mutation {
   createCoffee(createCoffeeInput: CreateCoffeeInput!): Coffee
+  updateCoffee(id: Float!, updateCoffeeInput: UpdateCoffeeInput!): Coffee!
+  removeCoffee(id: Float!): Coffee!
 }
 
 """Create coffee input"""
@@ -25,4 +54,13 @@ input CreateCoffeeInput {
   name: String!
   brand: String!
   flavors: [String!]!
+  type: CoffeeType!
+}
+
+input UpdateCoffeeInput {
+  """A new coffee name"""
+  name: String
+  brand: String
+  flavors: [String!]
+  type: CoffeeType
 }

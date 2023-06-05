@@ -3,7 +3,7 @@ import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGenerat
 import { Flavor } from "../flavor.entity/flavor.entity"
 import { Drink } from "src/common/interfaces/drink.interface/drink.interface"
 import { CoffeeType } from "src/common/enums/coffee-type.enum"
-import { loggerMiddleware } from "src/middleware/logger.middleware"
+import { loggerMiddleware } from "src/fields-middleware/logger.middleware"
 
 @Entity()
 @ObjectType({description: 'Coffee entity model', implements: () => Drink})

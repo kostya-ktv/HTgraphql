@@ -9,6 +9,7 @@ import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DateScalar } from './common/scalars/date.scalar/date.scalar';
 import { DrinksResolver } from './drinks/drinks.resolver';
+import { PubSubModule } from './pub-sub/pub-sub.module';
 
 @Module({
   imports: [
@@ -30,9 +31,11 @@ import { DrinksResolver } from './drinks/drinks.resolver';
         // numberScalarMode: 'integer'
         // dateScalarMode: 'timestamp'
         orphanedTypes: [Tea]
-    }
+      },
+      installSubscriptionHandlers: true
     }),
-    CoffeesModule
+    CoffeesModule,
+    PubSubModule
   ],
   controllers: [AppController],
   providers: [AppService, DateScalar, DrinksResolver],
